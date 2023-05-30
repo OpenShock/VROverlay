@@ -56,10 +56,9 @@ namespace EasyLazyLibrary
         }
 
         //初期化。失敗したらfalse
-        public bool Init()
+        public void Init()
         {
             openvr = OpenVR.System;
-            return IsReady();
         }
 
         //本ライブラリが利用可能か確認する
@@ -69,12 +68,12 @@ namespace EasyLazyLibrary
         }
 
         //全デバイス情報を更新
-        public void Update(ETrackingUniverseOrigin origin = ETrackingUniverseOrigin.TrackingUniverseStanding)
+        public void Update()
         {
             allDevicePose = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
             if (!IsReady()) { return; }
             //すべてのデバイスの情報を取得
-            openvr.GetDeviceToAbsoluteTrackingPose(origin, PredictedTime, allDevicePose);
+            openvr.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, PredictedTime, allDevicePose);
             //最終更新フレームを更新
             LastFrameCount = Time.frameCount;
         }
@@ -115,13 +114,13 @@ namespace EasyLazyLibrary
             return false;
         }
 
-        public Transform GetHMDTransform()
+        public SteamVR_Utils.RigidTransform? GetHMDTransform()
         {
             return GetTransform(GetHMDIndex());
         }
 
         //指定デバイスの姿勢情報を取得
-        public Transform GetTransform(uint index)
+        public SteamVR_Utils.RigidTransform? GetTransform(uint index)
         {
             //有効なデバイスか
             if (!IsDeviceValid(index))
@@ -129,24 +128,8 @@ namespace EasyLazyLibrary
                 return null;
             }
 
-            TrackedDevicePose_t Pose = allDevicePose[index];
-            SteamVR_Utils.RigidTransform trans = new SteamVR_Utils.RigidTransform(Pose.mDeviceToAbsoluteTracking);
-            Transform res = new Transform();
-
-            res.deviceid = index;
-
-            //右手系・左手系の変換をした
-            res.velocity[0] = Pose.vVelocity.v0;
-            res.velocity[1] = Pose.vVelocity.v1;
-            res.velocity[2] = -Pose.vVelocity.v2;
-            res.angularVelocity[0] = -Pose.vAngularVelocity.v0;
-            res.angularVelocity[1] = -Pose.vAngularVelocity.v1;
-            res.angularVelocity[2] = Pose.vAngularVelocity.v2;
-
-            res.position = trans.pos;
-            res.rotation = trans.rot;
-
-            return res;
+            var Pose = allDevicePose[index];
+            return new SteamVR_Utils.RigidTransform(Pose.mDeviceToAbsoluteTracking);
         }
 
         //device情報を取得する

@@ -218,8 +218,8 @@ public class EasyOpenVROverlayForUnity : MonoBehaviour
         var trans = util.GetHMDTransform();
         if (trans != null)
         {
-            transform.position = trans.position;
-            transform.rotation = trans.rotation;
+            transform.position = trans.Value.pos;
+            transform.rotation = trans.Value.rot;
         }
 
         //RenderTextureが生成されているかチェック
