@@ -1,143 +1,140 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.UI;
 
 #endif
 
-
-[RequireComponent(typeof(RectTransform))]
-[System.Serializable]
-public class LayoutElementWithMaxValues : LayoutElement
+namespace ShockLink.VrOverlay
 {
-    public float maxHeight;
-    public float maxWidth;
-
-    public bool useMaxWidth;
-    public bool useMaxHeight;
-
-    private bool _ignoreOnGettingPreferedSize;
-
-    public override int layoutPriority
+    [RequireComponent(typeof(RectTransform))]
+    [System.Serializable]
+    public class LayoutElementWithMaxValues : LayoutElement
     {
-        get => _ignoreOnGettingPreferedSize ? -1 : base.layoutPriority;
-        set => base.layoutPriority = value;
-    }
+        public float maxHeight;
+        public float maxWidth;
 
-    public override float preferredHeight
-    {
-        get
+        public bool useMaxWidth;
+        public bool useMaxHeight;
+
+        private bool _ignoreOnGettingPreferedSize;
+
+        public override int layoutPriority
         {
-            if (useMaxHeight)
-            {
-                var defaultIgnoreValue = _ignoreOnGettingPreferedSize;
-                _ignoreOnGettingPreferedSize = true;
-
-                var baseValue = LayoutUtility.GetPreferredHeight(transform as RectTransform);
-
-                _ignoreOnGettingPreferedSize = defaultIgnoreValue;
-
-                return baseValue > maxHeight ? maxHeight : baseValue;
-            }
-            else
-                return base.preferredHeight;
+            get => _ignoreOnGettingPreferedSize ? -1 : base.layoutPriority;
+            set => base.layoutPriority = value;
         }
-        set => base.preferredHeight = value;
-    }
 
-    public override float preferredWidth
-    {
-        get
+        public override float preferredHeight
         {
-            if (useMaxWidth)
+            get
             {
-                var defaultIgnoreValue = _ignoreOnGettingPreferedSize;
-                _ignoreOnGettingPreferedSize = true;
+                if (useMaxHeight)
+                {
+                    var defaultIgnoreValue = _ignoreOnGettingPreferedSize;
+                    _ignoreOnGettingPreferedSize = true;
 
-                var baseValue = LayoutUtility.GetPreferredWidth(transform as RectTransform);
+                    var baseValue = LayoutUtility.GetPreferredHeight(transform as RectTransform);
 
-                _ignoreOnGettingPreferedSize = defaultIgnoreValue;
+                    _ignoreOnGettingPreferedSize = defaultIgnoreValue;
 
-                return baseValue > maxWidth ? maxWidth : baseValue;
+                    return baseValue > maxHeight ? maxHeight : baseValue;
+                }
+                else
+                    return base.preferredHeight;
             }
-            else
-                return base.preferredWidth;
+            set => base.preferredHeight = value;
         }
-        set => base.preferredWidth = value;
+
+        public override float preferredWidth
+        {
+            get
+            {
+                if (useMaxWidth)
+                {
+                    var defaultIgnoreValue = _ignoreOnGettingPreferedSize;
+                    _ignoreOnGettingPreferedSize = true;
+
+                    var baseValue = LayoutUtility.GetPreferredWidth(transform as RectTransform);
+
+                    _ignoreOnGettingPreferedSize = defaultIgnoreValue;
+
+                    return baseValue > maxWidth ? maxWidth : baseValue;
+                }
+                else
+                    return base.preferredWidth;
+            }
+            set => base.preferredWidth = value;
+        }
     }
-}
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(LayoutElementWithMaxValues), true)]
-[CanEditMultipleObjects]
-public class LayoutMaxSizeEditor : LayoutElementEditor
-{
-    LayoutElementWithMaxValues layoutMax;
-
-    SerializedProperty maxHeightProperty;
-    SerializedProperty maxWidthProperty;
-
-    SerializedProperty useMaxHeightProperty;
-    SerializedProperty useMaxWidthProperty;
-
-    RectTransform myRectTransform;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(LayoutElementWithMaxValues), true)]
+    [CanEditMultipleObjects]
+    public class LayoutMaxSizeEditor : LayoutElementEditor
     {
-        base.OnEnable();
+        LayoutElementWithMaxValues layoutMax;
 
-        layoutMax = target as LayoutElementWithMaxValues;
-        myRectTransform = layoutMax.transform as RectTransform;
+        SerializedProperty maxHeightProperty;
+        SerializedProperty maxWidthProperty;
 
-        maxHeightProperty = serializedObject.FindProperty(nameof(layoutMax.maxHeight));
-        maxWidthProperty = serializedObject.FindProperty(nameof(layoutMax.maxWidth));
+        SerializedProperty useMaxHeightProperty;
+        SerializedProperty useMaxWidthProperty;
 
-        useMaxHeightProperty = serializedObject.FindProperty(nameof(layoutMax.useMaxHeight));
-        useMaxWidthProperty = serializedObject.FindProperty(nameof(layoutMax.useMaxWidth));
-    }
-
-    public override void OnInspectorGUI()
-    {
-        Draw(maxWidthProperty, useMaxWidthProperty);
-        Draw(maxHeightProperty, useMaxHeightProperty);
-
-        serializedObject.ApplyModifiedProperties();
-
-        EditorGUILayout.Space();
-
-        base.OnInspectorGUI();
-    }
-
-    void Draw(SerializedProperty property, SerializedProperty useProperty)
-    {
-        Rect position = EditorGUILayout.GetControlRect();
-
-        GUIContent label = EditorGUI.BeginProperty(position, null, property);
-
-        Rect fieldPosition = EditorGUI.PrefixLabel(position, label);
-
-        Rect toggleRect = fieldPosition;
-        toggleRect.width = 16;
-
-        Rect floatFieldRect = fieldPosition;
-        floatFieldRect.xMin += 16;
-
-
-        var use = EditorGUI.Toggle(toggleRect, useProperty.boolValue);
-        useProperty.boolValue = use;
-
-        if (use)
+        protected override void OnEnable()
         {
-            EditorGUIUtility.labelWidth = 4;
-            property.floatValue = EditorGUI.FloatField(floatFieldRect, new GUIContent(" "), property.floatValue);
-            EditorGUIUtility.labelWidth = 0;
+            base.OnEnable();
+
+            layoutMax = target as LayoutElementWithMaxValues;
+
+            maxHeightProperty = serializedObject.FindProperty(nameof(layoutMax.maxHeight));
+            maxWidthProperty = serializedObject.FindProperty(nameof(layoutMax.maxWidth));
+
+            useMaxHeightProperty = serializedObject.FindProperty(nameof(layoutMax.useMaxHeight));
+            useMaxWidthProperty = serializedObject.FindProperty(nameof(layoutMax.useMaxWidth));
         }
 
+        public override void OnInspectorGUI()
+        {
+            Draw(maxWidthProperty, useMaxWidthProperty);
+            Draw(maxHeightProperty, useMaxHeightProperty);
 
-        EditorGUI.EndProperty();
+            serializedObject.ApplyModifiedProperties();
+
+            EditorGUILayout.Space();
+
+            base.OnInspectorGUI();
+        }
+
+        void Draw(SerializedProperty property, SerializedProperty useProperty)
+        {
+            Rect position = EditorGUILayout.GetControlRect();
+
+            GUIContent label = EditorGUI.BeginProperty(position, null, property);
+
+            Rect fieldPosition = EditorGUI.PrefixLabel(position, label);
+
+            Rect toggleRect = fieldPosition;
+            toggleRect.width = 16;
+
+            Rect floatFieldRect = fieldPosition;
+            floatFieldRect.xMin += 16;
+
+
+            var use = EditorGUI.Toggle(toggleRect, useProperty.boolValue);
+            useProperty.boolValue = use;
+
+            if (use)
+            {
+                EditorGUIUtility.labelWidth = 4;
+                property.floatValue = EditorGUI.FloatField(floatFieldRect, new GUIContent(" "), property.floatValue);
+                EditorGUIUtility.labelWidth = 0;
+            }
+
+
+            EditorGUI.EndProperty();
+        }
     }
-}
 #endif
+}

@@ -333,7 +333,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   error: 1
-  eventLog: 0
   renderTexture: {fileID: 8400000, guid: 4096f9ea85ca8e64bb50cfe7d91d8c2f, type: 2}
   Position: {x: 0, y: -0.3, z: 1.5}
   Rotation: {x: 0, y: 0, z: 0}
@@ -344,15 +343,6 @@ MonoBehaviour:
   alpha: 0.5
   OverlayFriendlyName: ShockLink VR Overlay
   OverlayKeyName: ShockLinkVROverlay
-  DeviceTracking: 1
-  DeviceIndex: 0
-  Seated: 0
-  ResetSeatedCamera: 0
-  putLogDevicesInfo: 0
-  ConnectedDevices: 0
-  SelectedDeviceIndex: 0
-  DeviceSerialNumber: 
-  DeviceRenderModelName: 
   overlayHandle: 0
 --- !u!1 &1380597956
 GameObject:
@@ -390,7 +380,7 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 0
-  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0

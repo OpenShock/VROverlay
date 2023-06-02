@@ -1,31 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UiManager : MonoBehaviour
+namespace ShockLink.VrOverlay
 {
-    public static UiManager Instance;
-    
-    public GameObject LogGo;
-    public GameObject LogPrefab;
-
-    public List<LogItem> logItems = new();
-
-    private void Awake()
+    public class UiManager : MonoBehaviour
     {
-        Instance = this;
-    }
+        public static UiManager Instance;
 
-    public void AddLog(GenericIni sender, ControlLog log)
-    {
-        var go = Instantiate(LogPrefab, LogGo.transform);
-        var logItem = go.GetComponent<LogItem>();
-        if (logItem == null)
+        public GameObject LogGo;
+        public GameObject LogPrefab;
+
+        public List<LogItem> logItems = new();
+
+        private void Awake()
         {
-            Debug.LogError("Log item is null");
-            return;
+            Instance = this;
         }
-        logItem.Configure(sender, log);
-        logItems.Add(logItem);
-        
+
+        public void AddLog(GenericIni sender, ControlLog log)
+        {
+            var go = Instantiate(LogPrefab, LogGo.transform);
+            var logItem = go.GetComponent<LogItem>();
+            if (logItem == null)
+            {
+                Debug.LogError("Log item is null");
+                return;
+            }
+
+            logItem.Configure(sender, log);
+            logItems.Add(logItem);
+        }
     }
 }

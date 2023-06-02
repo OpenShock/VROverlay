@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-// ReSharper disable UnusedAutoPropertyAccessor.Global
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 public class BaseResponse<T>
 {

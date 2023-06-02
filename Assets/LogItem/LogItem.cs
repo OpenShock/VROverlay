@@ -2,27 +2,58 @@ using System.Collections;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class LogItem : MonoBehaviour
+namespace ShockLink.VrOverlay
 {
-    public TMP_Text MainText;
-
-    public void Configure(GenericIni sender, ControlLog log)
+    public class LogItem : MonoBehaviour
     {
-        EasyOpenVROverlayForUnity.Instance.overlay.ShowOverlay(EasyOpenVROverlayForUnity.Instance.overlayHandle);
-        MainText.text = $"{sender.Name} -> {log.Shocker.Name} - {log.Intensity}:{(log.Duration / 1000).ToString(CultureInfo.InvariantCulture)}";
+        public TMP_Text Text;
 
-        StartCoroutine(DeleteAfter(5));
-    }
+        [Header("Type Icons")] public GameObject TypeShock;
+        public GameObject TypeVibrate;
+        public GameObject TypeSound;
+        public GameObject TypeUnkown;
 
-    private IEnumerator DeleteAfter(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        Debug.Log("Destroying log game object");
-        UiManager.Instance.logItems.Remove(this);
-        Destroy(gameObject);
+        public void Configure(GenericIni sender, ControlLog log)
+        {
+            if (EasyOpenVROverlayForUnity.Instance != null)
+                EasyOpenVROverlayForUnity.Instance.overlay.ShowOverlay(EasyOpenVROverlayForUnity.Instance
+                    .overlayHandle);
+            Text.text =
+                $"{log.Shocker.Name} <color=#e3e3e3>{log.Intensity}<color=#a1a1a1>:</color>{(log.Duration / 1000f).ToString(CultureInfo.InvariantCulture)}</color> <color=#828282>{sender.Name}</color>";
 
-        if (UiManager.Instance.logItems.Count <= 0) EasyOpenVROverlayForUnity.Instance.overlay.HideOverlay(EasyOpenVROverlayForUnity.Instance.overlayHandle);
-        
+            TypeUnkown.SetActive(false);
+            switch (log.Type)
+            {
+                case ControlType.Shock:
+                    TypeShock.SetActive(true);
+                    break;
+                case ControlType.Vibrate:
+                    TypeVibrate.SetActive(true);
+                    break;
+                case ControlType.Sound:
+                    TypeSound.SetActive(true);
+                    break;
+                default:
+                    TypeUnkown.SetActive(true);
+                    break;
+            }
+
+            StartCoroutine(DeleteAfter(5));
+        }
+
+        private IEnumerator DeleteAfter(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            Debug.Log("Destroying log game object");
+            UiManager.Instance.logItems.Remove(this);
+            Destroy(gameObject);
+
+            if (UiManager.Instance.logItems.Count <= 0)
+                if (EasyOpenVROverlayForUnity.Instance != null)
+                    EasyOpenVROverlayForUnity.Instance.overlay.HideOverlay(EasyOpenVROverlayForUnity.Instance
+                        .overlayHandle);
+        }
     }
 }
