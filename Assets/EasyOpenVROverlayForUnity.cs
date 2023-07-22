@@ -194,7 +194,7 @@ namespace ShockLink.VrOverlay
 
             if (overlay.IsOverlayVisible(overlayHandle))
             {
-                updatePosition();
+                //updatePosition();
                 UpdateTexture();
             }
         }

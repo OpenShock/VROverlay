@@ -2,7 +2,6 @@ using System.Collections;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ShockLink.VrOverlay
 {
@@ -13,6 +12,7 @@ namespace ShockLink.VrOverlay
         [Header("Type Icons")] public GameObject TypeShock;
         public GameObject TypeVibrate;
         public GameObject TypeSound;
+        public GameObject TypeStop;
         public GameObject TypeUnkown;
 
         public void Configure(GenericIni sender, ControlLog log)
@@ -22,8 +22,7 @@ namespace ShockLink.VrOverlay
                     .overlayHandle);
             Text.text =
                 $"{log.Shocker.Name} <color=#e3e3e3>{log.Intensity}<color=#a1a1a1>:</color>{(log.Duration / 1000f).ToString(CultureInfo.InvariantCulture)}</color> <color=#828282>{sender.Name}</color>";
-
-            TypeUnkown.SetActive(false);
+            
             switch (log.Type)
             {
                 case ControlType.Shock:
@@ -34,6 +33,10 @@ namespace ShockLink.VrOverlay
                     break;
                 case ControlType.Sound:
                     TypeSound.SetActive(true);
+                    break;
+                case ControlType.Stop:
+                    Text.text = $"{log.Shocker.Name} STOP <color=#828282>{sender.Name}</color>";
+                    TypeStop.SetActive(true);
                     break;
                 default:
                     TypeUnkown.SetActive(true);

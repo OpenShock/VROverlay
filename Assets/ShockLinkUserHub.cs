@@ -1,6 +1,6 @@
-using System;
 using BestHTTP.SignalRCore;
 using BestHTTP.SignalRCore.Encoders;
+using ShockLink.VrOverlay.ShockLinkApi;
 using UnityEngine;
 
 namespace ShockLink.VrOverlay
@@ -8,16 +8,17 @@ namespace ShockLink.VrOverlay
     public static class ShockLinkUserHub
     {
         private static readonly HubConnection Connection = new(
-            new Uri("https://api.shocklink.net/1/hubs/user"), new JsonProtocol(new LitJsonEncoder()), new HubOptions
+            Config.ConfigInstance.ShockLink.UserHub, new JsonProtocol(new LitJsonEncoder()), new HubOptions
             {
                 PreferedTransport = TransportTypes.WebSocket
             });
 
         static ShockLinkUserHub()
         {
+            var lel = Config.ConfigInstance.ShockLink.ApiToken;
             Connection.ReconnectPolicy = new DefaultRetryPolicy();
             Connection.AuthenticationProvider =
-                new ShockLinkAuthenticator("9FLJsjfDOD8y2pKQvSQL0qYJxjYcCXnqwtJ3QFPOiCwulhEDFQFzoen3nVeJo5ry");
+                new ShockLinkAuthenticator(Config.ConfigInstance.ShockLink.ApiToken);
             Connection.On<GenericIni, ControlLog[]>("Log", (sender, logs) =>
             {
                 foreach (var log in logs) UiManager.Instance.AddLog(sender, log);
