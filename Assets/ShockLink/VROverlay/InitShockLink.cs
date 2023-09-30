@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace ShockLink.VrOverlay
+namespace ShockLink.VROverlay
 {
     public class InitShockLink : MonoBehaviour
     {

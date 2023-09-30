@@ -1,7 +1,7 @@
 ﻿using System;
 using Valve.VR;
 
-namespace ShockLink.VrOverlay
+namespace ShockLink.VROverlay
 {
     public static class EasyOpenVRUtil
     {

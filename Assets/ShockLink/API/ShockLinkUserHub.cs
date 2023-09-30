@@ -1,9 +1,10 @@
 using BestHTTP.SignalRCore;
 using BestHTTP.SignalRCore.Encoders;
-using ShockLink.VrOverlay.ShockLinkApi;
+using ShockLink.API;
+using ShockLink.API.Models;
 using UnityEngine;
 
-namespace ShockLink.VrOverlay
+namespace ShockLink.VROverlay
 {
     public static class ShockLinkUserHub
     {
@@ -15,7 +16,6 @@ namespace ShockLink.VrOverlay
 
         static ShockLinkUserHub()
         {
-            var lel = Config.ConfigInstance.ShockLink.ApiToken;
             Connection.ReconnectPolicy = new DefaultRetryPolicy();
             Connection.AuthenticationProvider =
                 new ShockLinkAuthenticator(Config.ConfigInstance.ShockLink.ApiToken);

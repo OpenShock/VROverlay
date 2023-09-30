@@ -6,7 +6,7 @@ using UnityEditor.UI;
 
 #endif
 
-namespace ShockLink.VrOverlay
+namespace ShockLink.VROverlay
 {
     [RequireComponent(typeof(RectTransform))]
     [System.Serializable]

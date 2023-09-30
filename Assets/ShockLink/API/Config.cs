@@ -1,9 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace ShockLink.VrOverlay.ShockLinkApi
+namespace ShockLink.API
 {
     public static class Config
     {

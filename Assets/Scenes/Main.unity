@@ -167,6 +167,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796463fbe6d44808bd08b8fc06722083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &587695305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 587695307}
+  - component: {fileID: 587695306}
+  m_Layer: 0
+  m_Name: VisManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &587695306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587695305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d03a8f5a91983e408ed905869db35ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &587695307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587695305}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.298346, y: -13.470448, z: 416.93423}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &601405981
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c45542c479c7249ac1f9556ef0f581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  error: 1
   renderTexture: {fileID: 8400000, guid: 4096f9ea85ca8e64bb50cfe7d91d8c2f, type: 2}
   Position: {x: 0, y: -0.3, z: 1.5}
   Rotation: {x: 0, y: 0, z: 0}
@@ -341,9 +384,58 @@ MonoBehaviour:
   MirrorY: 0
   width: 1
   alpha: 0.5
-  OverlayFriendlyName: ShockLink VR Overlay
-  OverlayKeyName: ShockLinkVROverlay
   overlayHandle: 0
+--- !u!1 &1315396644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1315396645}
+  - component: {fileID: 1315396646}
+  m_Layer: 5
+  m_Name: ActiveThing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1315396645
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315396644}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1539730892}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000030518, y: -256}
+  m_SizeDelta: {x: 1024, y: 512}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1315396646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315396644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0cc65ecd0466746af4d7ae3dd8e55c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActiveShockerHolder: {fileID: 1315396644}
+  ActiveShockerPrefab: {fileID: 5662304361723458776, guid: 770c624765f0f474a87ffe2794588a62, type: 3}
 --- !u!1 &1380597956
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +593,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1380597958}
+  - {fileID: 1315396645}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -521,6 +614,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6f37beac9af9c419efd250dc5df2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LogGo: {fileID: 1380597956}
-  LogPrefab: {fileID: 9044811803151205620, guid: 5ac4aebc8a2f05a4cb224e676d271b0f, type: 3}
-  logItems: []
