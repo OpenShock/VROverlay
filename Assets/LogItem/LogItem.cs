@@ -21,7 +21,7 @@ namespace ShockLink.VrOverlay
                 EasyOpenVROverlayForUnity.Instance.overlay.ShowOverlay(EasyOpenVROverlayForUnity.Instance
                     .overlayHandle);
             Text.text =
-                $"{log.Shocker.Name} <color=#e3e3e3>{log.Intensity}<color=#a1a1a1>:</color>{(log.Duration / 1000f).ToString(CultureInfo.InvariantCulture)}</color> <color=#828282>{sender.Name}</color>";
+                $"{log.Shocker.Name} <color=#e3e3e3>{log.Intensity}<color=#a1a1a1>:</color>{(log.Duration / 1000f).ToString(CultureInfo.InvariantCulture)}</color> <color=#ababab>{sender.Name}</color>";
             
             switch (log.Type)
             {
@@ -35,7 +35,7 @@ namespace ShockLink.VrOverlay
                     TypeSound.SetActive(true);
                     break;
                 case ControlType.Stop:
-                    Text.text = $"{log.Shocker.Name} STOP <color=#828282>{sender.Name}</color>";
+                    Text.text = $"{log.Shocker.Name} STOP <color=#ababab>{sender.Name}</color>";
                     TypeStop.SetActive(true);
                     break;
                 default:
